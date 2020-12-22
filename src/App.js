@@ -1,23 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function App() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/users")
+      .then((response) => setUsers(response.data));
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <br />
+      <br />
+      <h2>This is Axios Practice Application</h2>
+      <br />
+      <table class="table table-sm table-dark">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">UserName</th>
+            <th scope="col">Email</th>
+            <th scope="col">phone</th>
+          </tr>
+        </thead>
+        {users.map((user, index) => (
+          <tbody>
+            <tr
+              style={{ backgroundColor: index % 2 === 0 && "yellow" }}
+              key={user.id}
+            >
+              <th scope="row">{user.id}</th>
+              <td style={{ color: index % 2 === 0 && "black" }}>{user.name}</td>
+              <td style={{ color: index % 2 === 0 && "black" }}>
+                {user.username}
+              </td>
+              <td style={{ color: index % 2 === 0 && "black" }}>
+                {user.email}
+              </td>
+              <td style={{ color: index % 2 === 0 && "black" }}>
+                {user.phone}
+              </td>
+            </tr>
+          </tbody>
+        ))}
+      </table>
     </div>
   );
 }
